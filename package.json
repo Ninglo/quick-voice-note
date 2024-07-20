@@ -2,8 +2,9 @@
   "name": "quick-voice-note",
   "displayName": "Quick Voice Note",
   "publisher": "ninglo",
-  "description": "",
-  "version": "0.0.1",
+  "description": "Start taking voice notes with one shortcut (`cmd (ctrl) + shift + v`) !",
+  "version": "0.0.2",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,6 +17,9 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "extensionDependencies": [
+    "ms-vscode.vscode-speech"
+  ],
   "contributes": {
     "commands": [
       {
