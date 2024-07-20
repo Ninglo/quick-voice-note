@@ -2,8 +2,9 @@
   "name": "quick-voice-note",
   "displayName": "Quick Voice Note",
   "publisher": "ninglo",
-  "description": "Start taking voice notes with one shortcut (`cmd (ctrl) + shift + v`) !",
-  "version": "0.0.2",
+  "description": "Start taking voice notes with one shortcut (cmd (ctrl) + shift + v) !",
+  "icon": "logo.jpeg",
+  "version": "0.0.6",
   "license": "MIT",
   "engines": {
     "vscode": "^1.91.0"

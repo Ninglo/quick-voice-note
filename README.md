@@ -8,10 +8,8 @@
 
 ## Extra features
 
-Use `Open Created Notes` to view your previous notes.
+Use `Open Created Notes` to view your previous notes. Also, you can change the notes' storage directory by changing `quick-voice-note.noteFolder` in your `settings.json`.
 
 ![Open Created Notes](./resource/image.png)
-
-Also, you can change the notes' storage directory by changing `quick-voice-note.noteFolder` in your `settings.json`.
 
 **Enjoy!**
