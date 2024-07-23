@@ -21,16 +21,13 @@ function getConfigProperty<T>(property: string, fallback: T): T {
 };
 
 export function activate(context: vscode.ExtensionContext) {
-	const disposable = vscode.commands.registerCommand('quick-voice-note.takeNote', async () => {
-		const configPath = getNoteFolder();
-		const notesDirPath = configPath ? vscode.Uri.file(configPath) : context.globalStorageUri;
-		const noteFilePath = await findValidPath(notesDirPath)(1);
+	const disposable0 = vscode.commands.registerCommand('quick-voice-note.takeSimpleNote', async () => {
+		await createNewNote(context);
+	});
 
-		await vscode.workspace.fs.createDirectory(notesDirPath);
-		await vscode.workspace.fs.writeFile(noteFilePath, new Uint8Array(0));
-		await vscode.workspace.openTextDocument(noteFilePath).then(vscode.window.showTextDocument);
-
-		await vscode.commands.executeCommand('workbench.action.editorDictation.start');
+	const disposable1 = vscode.commands.registerCommand('quick-voice-note.takeNote', async () => {
+		await createNewNote(context);
+		await startDictation();
 	});
 
 	const disposable2 = vscode.commands.registerCommand('quick-voice-note.openNote', async () => {
@@ -51,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.workspace.openTextDocument(noteFilePath).then(vscode.window.showTextDocument);
 	});
 
-	context.subscriptions.push(disposable, disposable2);
+	context.subscriptions.push(disposable0, disposable1, disposable2);
 }
 
 const findValidPath = (dir: vscode.Uri, template = 'note-${index}.md') => (index: number): Thenable<vscode.Uri> => {
@@ -62,5 +59,19 @@ const findValidPath = (dir: vscode.Uri, template = 'note-${index}.md') => (index
 		() => noteFilePath
 	);
 };
+
+async function startDictation() {
+	await vscode.commands.executeCommand('workbench.action.editorDictation.start');
+}
+
+async function createNewNote(context: vscode.ExtensionContext) {
+	const configPath = getNoteFolder();
+	const notesDirPath = configPath ? vscode.Uri.file(configPath) : context.globalStorageUri;
+	const noteFilePath = await findValidPath(notesDirPath)(1);
+
+	await vscode.workspace.fs.createDirectory(notesDirPath);
+	await vscode.workspace.fs.writeFile(noteFilePath, new Uint8Array(0));
+	await vscode.workspace.openTextDocument(noteFilePath).then(vscode.window.showTextDocument);
+}
 
 export function deactivate() { }
