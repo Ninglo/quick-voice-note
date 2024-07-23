@@ -4,7 +4,7 @@
   "publisher": "ninglo",
   "description": "Start taking voice notes with one shortcut (cmd (ctrl) + shift + v) !",
   "icon": "logo.jpeg",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "engines": {
     "vscode": "^1.91.0"

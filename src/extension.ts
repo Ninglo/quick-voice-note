@@ -1,5 +1,19 @@
 import * as vscode from 'vscode';
 
+// TODO: description at configuration
+function getNoteFolder(): string {
+	const noteFolderConfig = getConfigProperty('noteFolder', '');
+
+	const currentDate = new Date();
+	const year = currentDate.getFullYear().toString();
+	const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+	const day = currentDate.getDate().toString().padStart(2, '0');
+	return noteFolderConfig
+		.replace('${year}', year)
+		.replace('${month}', month)
+		.replace('${day}', day);
+}
+
 function getConfigProperty(property: 'noteFolder', fallback: string): string;
 function getConfigProperty<T>(property: string, fallback: T): T {
 	const config = vscode.workspace.getConfiguration('quick-voice-note');
@@ -8,7 +22,7 @@ function getConfigProperty<T>(property: string, fallback: T): T {
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable = vscode.commands.registerCommand('quick-voice-note.takeNote', async () => {
-		const configPath = getConfigProperty('noteFolder', '');
+		const configPath = getNoteFolder();
 		const notesDirPath = configPath ? vscode.Uri.file(configPath) : context.globalStorageUri;
 		const noteFilePath = await findValidPath(notesDirPath)(1);
 
@@ -20,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	const disposable2 = vscode.commands.registerCommand('quick-voice-note.openNote', async () => {
-		const configPath = getConfigProperty('noteFolder', '');
+		const configPath = getNoteFolder();
 		const notesDirPath = configPath ? vscode.Uri.file(configPath) : context.globalStorageUri;
 		const noteFiles = await vscode.workspace.fs.readDirectory(notesDirPath);
 		const fileNames = noteFiles.map(([fileName]) => fileName);
