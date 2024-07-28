@@ -10,8 +10,11 @@ export async function createDailyNote(context: vscode.ExtensionContext) {
     const todayUri = await getDailyNotePath(today, context);
 
     try {
-        const yesterdayContent = await vscode.workspace.fs.readFile(yesterdayUri).then(content => content, () => new Uint8Array(0));
-        await vscode.workspace.fs.writeFile(todayUri, yesterdayContent);
+        const exist = await vscode.workspace.fs.stat(todayUri).then(() => true, () => false);
+        if (!exist) {
+            const yesterdayContent = await vscode.workspace.fs.readFile(yesterdayUri).then(content => content, () => new Uint8Array(0));
+            await vscode.workspace.fs.writeFile(todayUri, yesterdayContent);
+        }
 
         await vscode.workspace.openTextDocument(todayUri).then(vscode.window.showTextDocument);
     } catch (error) {

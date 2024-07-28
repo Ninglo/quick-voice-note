@@ -4,7 +4,7 @@
   "publisher": "ninglo",
   "description": "Start taking voice notes with one shortcut (cmd (ctrl) + shift + v) !",
   "icon": "logo.jpeg",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "engines": {
     "vscode": "^1.91.0"
@@ -40,7 +40,7 @@
       },
       {
         "command": "quick-voice-note.createDailyNote",
-        "title": "Create Daily Note",
+        "title": "Create Daily Note (Open if already exists)",
         "category": "Quick Voice Note"
       }
     ],
@@ -49,6 +49,11 @@
         "command": "quick-voice-note.takeNote",
         "key": "ctrl+shift+v",
         "mac": "cmd+shift+v"
+      },
+      {
+        "command": "quick-voice-note.createDailyNote",
+        "key": "alt+shift+d",
+        "mac": "ctrl+shift+d"
       }
     ],
     "configuration": {
