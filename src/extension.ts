@@ -1,24 +1,6 @@
 import * as vscode from 'vscode';
-
-// TODO: description at configuration
-function getNoteFolder(): string {
-	const noteFolderConfig = getConfigProperty('noteFolder', '');
-
-	const currentDate = new Date();
-	const year = currentDate.getFullYear().toString();
-	const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-	const day = currentDate.getDate().toString().padStart(2, '0');
-	return noteFolderConfig
-		.replace('${year}', year)
-		.replace('${month}', month)
-		.replace('${day}', day);
-}
-
-function getConfigProperty(property: 'noteFolder', fallback: string): string;
-function getConfigProperty<T>(property: string, fallback: T): T {
-	const config = vscode.workspace.getConfiguration('quick-voice-note');
-	return config.get(property, fallback);
-};
+import { getNoteFolder } from './path';
+import { createDailyNote } from './daily';
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposable0 = vscode.commands.registerCommand('quick-voice-note.takeSimpleNote', async () => {
@@ -48,7 +30,11 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.workspace.openTextDocument(noteFilePath).then(vscode.window.showTextDocument);
 	});
 
-	context.subscriptions.push(disposable0, disposable1, disposable2);
+	const disposable3 = vscode.commands.registerCommand('quick-voice-note.createDailyNote', async () => {
+		await createDailyNote(context);
+	});
+
+	context.subscriptions.push(disposable0, disposable1, disposable2, disposable3);
 }
 
 const findValidPath = (dir: vscode.Uri, template = 'note-${index}.md') => (index: number): Thenable<vscode.Uri> => {
