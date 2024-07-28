@@ -16,7 +16,7 @@ export function getNoteFolder(): string {
 }
 
 export async function getDailyNotePath(date: Date, context: vscode.ExtensionContext): Promise<vscode.Uri> {
-    const dailyFolderConfig = getConfigProperty('createDailyNote', '');
+    const dailyFolderConfig = getConfigProperty('dailyNoteDirPath', '');
 
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');

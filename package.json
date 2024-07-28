@@ -4,7 +4,7 @@
   "publisher": "ninglo",
   "description": "Start taking voice notes with one shortcut (cmd (ctrl) + shift + v) !",
   "icon": "logo.jpeg",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "engines": {
     "vscode": "^1.91.0"
@@ -58,6 +58,11 @@
           "type": "string",
           "default": "",
           "description": "The folder where notes will be stored."
+        },
+        "quick-voice-note.dailyNoteDirPath": {
+          "type": "string",
+          "default": "",
+          "description": "The folder where daily notes will be stored."
         }
       }
     }
